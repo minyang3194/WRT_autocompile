@@ -9,9 +9,9 @@ on:
         required: true
         description: Device Model
         type: choice
-        default: x64_immwrt
+        default: x86-64
         options:
-          - x64_immwrt
+          - x86-64
       runs-on:
         required: true
         description: Runs on...
@@ -64,11 +64,11 @@ jobs:
         run: |
           export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
-          export BUILD_SRC=$(awk -F"=" '/REPO_URL/ {print $NF}' "./compilecfg/x64_immwrt.ini")
+          export BUILD_SRC=$(awk -F"=" '/REPO_URL/ {print $NF}' "./compilecfg/x86-64.ini")
           echo "BUILD_SRC=$BUILD_SRC" >> $GITHUB_ENV
 
       - name: Pre Clone
-        run: ./pre_clone_action.sh x64_immwrt
+        run: ./pre_clone_action.sh x86-64
 
       - name: Cache Dependencies
         uses: actions/cache@v4
@@ -89,7 +89,7 @@ jobs:
           fi
 
       - name: Build Firmware
-        run: ./build.sh x64_immwrt
+        run: ./build.sh x86-64
 
       - name: Prepare Docker build context
         run: |
@@ -166,6 +166,6 @@ jobs:
       - name: Release Firmware
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.BUILD_DATE }}_x64_immwrt
+          tag_name: ${{ env.BUILD_DATE }}_x86-64
           files: ${{ inputs.model == 'n1_immwrt' && env.PACKAGED_OUTPUTPATH || './firmware' }}/*.*
           body_path: ./release_body.txt
