@@ -1,0 +1,36 @@
+name: Scheduled Build
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 00:00 执行（北京时间 08:00）
+  workflow_dispatch:     # 允许手动触发
+
+jobs:
+  trigger-builds:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # 定义需要定时编译的设备列表（按需增减）
+        device:
+          - model: jdcloud_ipq60xx_libwrt
+            runs-on: ubuntu-22.04
+          - model: zn_m2_libwrt
+            runs-on: ubuntu-22.04
+          # 添加更多设备配置...
+
+    steps:
+      - name: Trigger Release WRT Workflow
+        uses: octokit/request-action@v2.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          route: POST /repos/${{ github.repository }}/actions/workflows/release_wrt.yml/dispatches
+          headers: accept=application/vnd.github+json
+          data: |
+            {
+              "ref": "main",
+              "inputs": {
+                "model": "${{ matrix.device.model }}",
+                "runs-on": "${{ matrix.device.runs-on }}"
+              }
+            }
