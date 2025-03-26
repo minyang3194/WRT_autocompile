@@ -1,12 +1,8 @@
 name: immortalwrt in docker
-run-name: Release - ${{ inputs.model }}
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: 0 15 * * *
-
-on:
   workflow_dispatch:
     inputs:
       model:
