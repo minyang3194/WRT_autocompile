@@ -24,7 +24,6 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DOCKER_REPO: jessekool/immortalwrt_multiple_ethports  # 替换为你的Docker仓库
   DOCKER_TAG: latest
 
