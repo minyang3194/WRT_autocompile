@@ -1,4 +1,5 @@
-name: X86-64
+name: immortalwrt in docker
+run-name: Release - ${{ inputs.model }}
 
 on:
   workflow_dispatch:
