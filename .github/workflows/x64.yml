@@ -79,7 +79,7 @@ jobs:
               /bin/sh "$GITHUB_WORKSPACE/set_dhcp.sh"\
           }
           }' update.sh
-          sed -i '/update_default_lan_addr/a\    set_dhcp_off' update.sh
+          sed -i '/^[[:space:]]*update_default_lan_addr$/a\    set_dhcp_off' update.sh
           chmod +x set_dhcp.sh
           
       - name: Cache Dependencies
