@@ -72,10 +72,12 @@ jobs:
 
       - name: inject set_dhcp_off script
         run: |
-          # 修改 update.sh 插入函数
-          sed -i '/update_default_lan_addr() {/a\
+          sed -i '/^update_default_lan_addr() {/,/^}/ {
+              /^}/a\
+          \
           set_dhcp_off() {\
-              \/bin\/sh "$GITHUB_WORKSPACE\/set_dhcp.sh"\
+              /bin/sh "$GITHUB_WORKSPACE/set_dhcp.sh"\
+          }
           }' update.sh
           sed -i '/update_default_lan_addr/a\    set_dhcp_off' update.sh
           chmod +x set_dhcp.sh
