@@ -70,6 +70,16 @@ jobs:
       - name: Pre Clone
         run: ./pre_clone_action.sh x86-64
 
+      - name: inject set_dhcp_off script
+        run: |
+          # 修改 update.sh 插入函数
+          sed -i '/update_default_lan_addr() {/a\
+          set_dhcp_off() {\
+              \/bin\/sh "$GITHUB_WORKSPACE\/set_dhcp.sh"\
+          }' update.sh
+          sed -i '/update_default_lan_addr/a\    set_dhcp_off' update.sh
+          chmod +x set_dhcp.sh
+          
       - name: Cache Dependencies
         uses: actions/cache@v4
         with:
