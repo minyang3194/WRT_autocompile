@@ -14,7 +14,7 @@ jobs:
         device:
           - model: jdcloud_ipq60xx_libwrt
             runs-on: ubuntu-22.04
-          - model: zn_m2_libwrt
+          - model: zn_m2_libwrt_nowifi
             runs-on: ubuntu-22.04
           # 添加更多设备配置...
 
