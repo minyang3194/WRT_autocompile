@@ -3,7 +3,7 @@ run-name: Build - ${{ inputs.model }}
 
 on:
   schedule:
-    - cron: 0 15 * * *
+    - cron: 0 15 * * 4
   workflow_dispatch:
     inputs:
       model:
